@@ -17,32 +17,69 @@ function _init()
 	h=35
 	cs={13,4,12,3}
 
+	mx=0
+	my=0
+	dmx=0
+	dmy=0
+
+	movspd=0.05
+	sensitivity = 0.000125
+
 	wasvertint=false
 
+	-- enables mouse and keyboard
+	poke(0x5F2D, 5)
 end
 
 function _update60()
 	controls() 
+
+	mx = stat(32)
+	my = stat(33)
+	dmx = stat(38)
+	dmy = stat(39)
+	
+	pa -= dmx * sensitivity
 end
 	
 function _draw()
 	cls(0)
 	rectfill(0,64,128,128,1)
 	rectfill(0,0,128,64,2)
+	
+	doraycasting2()
 	flush_printq()
 
-	doraycasting2()
+	--print("mx:"..mx,5,60,7)
+	--print("my:"..my,5,70,7)
+	--print("dmx:"..dmx,5,80,7)
+	--print("dmy:"..dmy,5,90,7)
+
 end
 
 function controls() 
-	if btn(1,1) then
-		px+=cos(pa -0.25)*0.1
-		py+=sin(pa -0.25)*0.1
+	if stat(28, 7) then
+		px+=cos(pa - 0.25)*movspd
+		py+=sin(pa - 0.25)*movspd
+		--queue_prt("stat(28, 7):"..tostr(stat(28, 7)),5,80,7)
 	end
 
-	if btn(0,1)then
-		px-=cos(pa -0.25)*0.1
-		py-=sin(pa -0.25)*0.1
+	if stat(28, 4)then
+		--queue_prt("stat(28, 4):"..tostr(stat(28, 4)),5,80,7)
+		px-=cos(pa -0.25)*movspd
+		py-=sin(pa -0.25)*movspd
+	end
+
+	if stat(28,22) then
+		px-=cos(pa)*movspd
+		py-=sin(pa)*movspd
+		--queue_prt("stat(28, 22):"..tostr(stat(28, 5)),5,80,7)
+	end
+
+	if stat(28,26) then
+		px+=cos(pa)*movspd
+		py+=sin(pa)*movspd
+		--queue_prt("stat(28, 26):"..tostr(stat(28, 5)),5,80,7)
 	end
 
 	if btn(⬅️) then		
@@ -59,31 +96,31 @@ function controls()
 		end
 	end
 
-	if btn(⬆️) or btn(2,1) then
-		px+=cos(pa)*0.1
-		py+=sin(pa)*0.1
-
-		--if px>64 then px=64 end
-		--if py>64 then py=64 end
-	end
+	--if btn(⬆️) or btn(2,1) then
+	--	px+=cos(pa)*0.1
+	--	py+=sin(pa)*0.1
+--
+	--	--if px>64 then px=64 end
+	--	--if py>64 then py=64 end
+	--end
+	--
+	--if btn(⬇️) or btn(3,1) then
+	--	px-=cos(pa)*0.1
+	--	py-=sin(pa)*0.1
+--
+	--	--if px<0 then px=0 end
+	--	--if py<0 then py=0 end
+	--end
 	
-	if btn(⬇️) or btn(3,1) then
-		px-=cos(pa)*0.1
-		py-=sin(pa)*0.1
-
-		--if px<0 then px=0 end
-		--if py<0 then py=0 end
-	end
-	
-	if btn(❎) or btn(4,1) then
-		px-=cos(pa -0.25)*0.1
-		py-=sin(pa -0.25)*0.1
-	end
-
-	if (btn(🅾️) or btn(5,1)) then
-		px+=cos(pa -0.25)*0.1
-		py+=sin(pa -0.25)*0.1
-	end
+	--if btn(❎) or btn(4,1) then
+	--	px-=cos(pa -0.25)*0.1
+	--	py-=sin(pa -0.25)*0.1
+	--end
+--
+	--if (btn(🅾️) or btn(5,1)) then
+	--	px+=cos(pa -0.25)*0.1
+	--	py+=sin(pa -0.25)*0.1
+	--end
 end
 
 
