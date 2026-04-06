@@ -23,7 +23,7 @@ function _init()
 	dmy=0
 
 	movspd=0.05
-	sensitivity = 0.000125
+	sensitivity = 0.0001
 
 	wasvertint=false
 
@@ -50,37 +50,70 @@ function _draw()
 	doraycasting2()
 	flush_printq()
 
-	--print("mx:"..mx,5,60,7)
-	--print("my:"..my,5,70,7)
-	--print("dmx:"..dmx,5,80,7)
-	--print("dmy:"..dmy,5,90,7)
+	--print("player tile x="..flr(px),2,115,7)
+	--print("player tile y="..flr(py),2,121,7)
+--
+	--local x1 = 7
+	--if is_wall(flr(px+1),flr(py)) then		
+	--	x1=8
+	--else
+	--	x1=7
+	--end
+	--print("N+x:"..(px+1)..","..py,68,115,x1)
+
+
+// basic collision
+	if mget(px-1,py)>0 or px<=0 then
+		px=max(px,flr(px)+0.2)
+	end
+	if mget(px+1,py)>0 or px>=31 then
+		px=min(px,ceil(px)-0.2)
+	end
+	if mget(px,py-1)>0 or py<=0 then
+		py=max(py,flr(py)+0.2)
+	end
+	if mget(px,py+1)>0 or py>=31 then
+		py=min(py,ceil(py)-0.2)
+	end
 
 end
 
+function is_wall(x,y)
+	if mget(x,y)==0 then
+		return false
+	else
+		return true
+	end
+end
+
 function controls() 
-	if stat(28, 7) then
-		px+=cos(pa - 0.25)*movspd
-		py+=sin(pa - 0.25)*movspd
-		--queue_prt("stat(28, 7):"..tostr(stat(28, 7)),5,80,7)
+	local newpx=px
+	local newpy=py
+
+	if stat(28, 7) then -- LEFT
+		newpx+=cos(pa - 0.25)*movspd
+		newpy+=sin(pa - 0.25)*movspd
 	end
 
-	if stat(28, 4)then
-		--queue_prt("stat(28, 4):"..tostr(stat(28, 4)),5,80,7)
-		px-=cos(pa -0.25)*movspd
-		py-=sin(pa -0.25)*movspd
+	if stat(28, 4)then -- RIGHT
+		newpx-=cos(pa -0.25)*movspd
+		newpy-=sin(pa -0.25)*movspd
 	end
 
-	if stat(28,22) then
-		px-=cos(pa)*movspd
-		py-=sin(pa)*movspd
-		--queue_prt("stat(28, 22):"..tostr(stat(28, 5)),5,80,7)
+	if stat(28,22) then -- BACK
+		newpx-=cos(pa)*movspd
+		newpy-=sin(pa)*movspd
 	end
 
-	if stat(28,26) then
-		px+=cos(pa)*movspd
-		py+=sin(pa)*movspd
-		--queue_prt("stat(28, 26):"..tostr(stat(28, 5)),5,80,7)
+	if stat(28,26) then -- FORWARD
+		newpx+=cos(pa)*movspd
+		newpy+=sin(pa)*movspd
 	end
+
+	-- if not collision
+	px=newpx
+	py=newpy
+
 
 	if btn(⬅️) then		
 		pa+=0.01
