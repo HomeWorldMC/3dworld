@@ -137,7 +137,7 @@ function _draw()
 	flush_drawqt()
 
 	--pset(0,0,11)
-	print("mget(px,py)"..mget(lx,ly),5,110,7)
+	--print("mget(px,py)"..mget(lx,ly),5,110,7)
 	lx,ly=lookingat()
 	--print("looking at ("..lx..","..ly..") sprite="..mget(lx,ly),5,120,7)
 
@@ -363,7 +363,7 @@ function domap()
 	local offx=3
 	local offy=3
 
-	printh("","log.txt",true)
+	--printh("","log.txt",true)
 	
 	for iy = mapy-5,mapy+5 do
 		for ix = mapx-5,mapx+5 do			
@@ -381,7 +381,7 @@ function domap()
 
 
 			offx+=3
-			printh("ix="..ix..", iy="..iy..", spr="..spr,"log.txt")
+			--printh("ix="..ix..", iy="..iy..", spr="..spr,"log.txt")
 		end
 		offy+=3
 		offx=3
