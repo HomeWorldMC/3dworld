@@ -35,7 +35,7 @@ function _init()
 	viewbounds_y2=py+viewdist
 
 	movspd=0.05
-	sensitivity = 0.00005
+	sensitivity = 0.0002
 
 	wasvertint=false
 
