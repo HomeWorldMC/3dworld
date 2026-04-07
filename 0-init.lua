@@ -1,5 +1,10 @@
 function _init()
+   poke( 0x5f2e, 1 ) --enable hidden colors
+   custom_palette = {[0]=0,128,133,5,6,7,1,140,12,3,139,11,130,132,4,15}
+   reset_pal()
+
 	pa=0
+	lpa=1
 		
 	px=1
 	py=3
@@ -14,7 +19,7 @@ function _init()
 	dy=0
 	ix=0
 	iy=0
-	h=35
+	h=32
 	cs={13,4,12,3,5}
 
 	mx=0
@@ -22,7 +27,7 @@ function _init()
 	dmx=0
 	dmy=0
 
-	viewdist=16
+	viewdist=12
 
 	viewbounds_x1=px-viewdist
 	viewbounds_x2=px+viewdist
@@ -36,8 +41,31 @@ function _init()
 
 	floortilebound=128
 
+	texturesize=2 --*8
+
+	facing="North"
+
+	looking_ray_x=0
+	looking_ray_y=0
+
+	looking_nx=0
+	looking_ny=0
+
+	looking_mx=0
+	looking_my=0
+
+	notfound=true
+
+	lx,ly=0
+
 	-- enables mouse and keyboard
 	poke(0x5F2D, 5)
+	--palt(0, false)
+end
+
+function reset_pal()
+	pal()
+	--pal( custom_palette, 1 )
 end
 
 function _update60()
@@ -58,13 +86,13 @@ function _update60()
 	if (mget(px-1,py)>0 and mget(px-1,py)<floortilebound) or px<=0 then
 		px=max(px,flr(px)+0.2)
 	end
-	if (mget(px+1,py)>0 and mget(px+1,py)<floortilebound) or px>=31 then
+	if (mget(px+1,py)>0 and mget(px+1,py)<floortilebound) or px>=127 then
 		px=min(px,ceil(px)-0.2)
 	end
 	if (mget(px,py-1)>0 and mget(px,py-1)<floortilebound) or py<=0 then
 		py=max(py,flr(py)+0.2)
 	end
-	if (mget(px,py+1)>0 and mget(px,py+1)<floortilebound) or py>=31 then
+	if (mget(px,py+1)>0 and mget(px,py+1)<floortilebound) or py>=63 then
 		py=min(py,ceil(py)-0.2)
 	end
 
@@ -73,7 +101,21 @@ function _update60()
 	dmx = stat(38)
 	dmy = stat(39)
 	
+	
 	pa -= dmx * sensitivity
+
+	if pa>1 then pa = 0 end
+	if pa<0 then pa = 1 end
+
+	if pa>=0.125 and pa<0.375 then 
+		facing = "east" 
+	elseif pa>=0.375 and pa<0.625 then 
+		facing = "north" 
+	elseif pa>=0.625 and pa<0.875 then 
+		facing = "west" 
+	else
+		facing = "south" 
+	end
 end
 	
 function _draw()
@@ -82,116 +124,42 @@ function _draw()
 	--fillp(🐱)
 
 
-	--rectfill(0,64,128,128,1)
+	rectfill(0,0,127,63,5)
+	--rectfill(0,64,127,127,5)
 	drawfloor(px,py,pa) 
-	drawceiling(px,py,pa) 
-	--rectfill(0,0,128,64,1)
+	--drawceiling(px,py,pa) 
+	lpa=pa
 	
 	doraycasting()
 	flush_printq()
+	flush_drawq()
 
-	--print("player tile x="..flr(px),2,115,7)
-	--print("player tile y="..flr(py),2,121,7)
-	--print("bounds={"..viewbounds_x1..","..viewbounds_x2..","..viewbounds_y1..","..viewbounds_y2.."}",2,109,7)
---
-	--local x1 = 7
-	--if is_wall(flr(px+1),flr(py)) then		
-	--	x1=8
-	--else
-	--	x1=7
-	--end
-	--print("N+x:"..(px+1)..","..py,68,115,x1)
+	--pset(0,0,11)
+	--print("map("..flr(px)..","..flr(py)..")",5,110,7)
+	lx,ly=lookingat()
+	--print("looking at ("..lx..","..ly..") sprite="..mget(lx,ly),5,120,7)
 
-	--tline(0, 90, 128, 90, 8, 2, -1/128, 0)
-	pset(0,0,11)
-
+	spr(16,64,64)
 end
 
-function drawfloor2() 
-	
-	for y = 64,127 do
-		--vx0=cos(pa+atan2(1,(0-64)/64))
-		--vy0=sin(pa+atan2(1,(0-64)/64))
---
-		--vx1=cos(pa+atan2(1,(127-64)/64))
-		--vy1=sin(pa+atan2(1,(127-64)/64))
-
-		vx0=cos(pa-(0-64)/512)
-		vy0=sin(pa-(0-64)/512)
-
-		vx1=cos(pa-(127-64)/512)
-		vy1=sin(pa-(127-64)/512)
-
-		local u0 = px + vx0 * (128-y)
-		local v0 = py + vy0 * (128-y)
-		
-		local u1 = px + vx1 * (128-y)
-		local v1 = py + vy1 * (128-y)		
-
-		u_step = (u1 - u0) / 128
-		v_step = (v1 - v0) / 128
-
-		--(py+vy*d) % 1 * 2 + (mget(x,y)-1) * 2
-
-		--tline(0, y, 128, y, 8, 2, u_step, v_step)
-	end
-end
-
-function drawfloor3()
-  -- camera setup
-  local cam_x, cam_y = px, py 
-  local cam_h = h -- camera height
-  local fov = 128
-
-  for y=0,63 do
-    -- perspective calculation for each row
-    local p = (y+0.5) / 64 -- normalized vertical position
-    local row_depth = cam_h / p -- distance to this row
-    
-    -- calculate screen bounds
-    local x_start = 0
-    local x_end = 127
-    
-    -- map sampling coordinates
-    -- this samples from the map based on camera position
-    local mx = cam_x - row_depth
-    local my = cam_y + row_depth
-    
-    -- texture slope based on row_depth (perspective scaling)
-    local mdx = (row_depth * 2) / 128
-    local mdy = 0 -- 0 means horizontal floor mapping
-    
-    -- draw textured line
-    -- note: y+64 fills the bottom half of the screen
-    tline(x_start,y+64, x_end,y+64, 
-          mx,my, mdx,mdy)
-  end
-end
-
--- conceptual code to draw a floor
 function drawfloor(cam_x, cam_y, cam_a)
-  -- 128x128 screen
-  for y=64, 127 do
-    -- calculate distance/perspective for this row
-    local dist = 32/(y-64)
-    
-    -- calculate floor space coordinates for left and right edges
-    -- of this horizontal scanline based on camera angle (a)
+  for sy=64,127 do
+    local dy = sy - 64
+    local dist = 31.5 / dy
+
     local x1 = cam_x + (cos(cam_a+0.25)*dist - sin(cam_a+0.25)*dist)
     local y1 = cam_y + (sin(cam_a+0.25)*dist + cos(cam_a+0.25)*dist)
-	
+
     local x2 = cam_x + (cos(cam_a-0.25)*dist + sin(cam_a-0.25)*dist)
     local y2 = cam_y + (sin(cam_a-0.25)*dist - cos(cam_a-0.25)*dist)
-    
-    -- draw line from left (0,y) to right (127,y)
-    -- sampling from map space
-    tline(0,y, 127,y, 
-          x1,y1,  -- start mapping coordinate (u,v)
-          (x2-x1)/128, (y2-y1)/128) -- delta (stepping)
+
+    tline(0, sy, 127, sy,
+      x1, y1,
+      (x2-x1)/128, (y2-y1)/128
+    )
   end
 end
 
--- conceptual code to draw a floor
 function drawceiling(cam_x, cam_y, cam_a)
   -- 128x128 screen
   for y=0, 63 do
@@ -212,15 +180,6 @@ function drawceiling(cam_x, cam_y, cam_a)
           x1,y1,  -- start mapping coordinate (u,v)
           (x2-x1)/128, (y2-y1)/128) -- delta (stepping)
   end
-end
-
-
-function is_wall(x,y)
-	if mget(x,y)==0 then
-		return false
-	else
-		return true
-	end
 end
 
 function controls() 
@@ -266,6 +225,13 @@ function controls()
 		end
 	end
 
+	if stat(34)==1 then
+		--queue_spr(16,64,64,1,1,false,false)
+		if mget(lx,ly)==5 then
+			mset(lx, ly, 130)
+		end
+	end
+
 	--if btn(⬆️) or btn(2,1) then
 	--	px+=cos(pa)*0.1
 	--	py+=sin(pa)*0.1
@@ -293,99 +259,97 @@ function controls()
 	--end
 end
 
-function queue_spr(n, x, y, w, h, flip_x, flip_y)
-  add(drawqueue, {
-    n=n, x=x, y=y,
-    w=w or 1, h=h or 1,
-    fx=flip_x, fy=flip_y
-  })
-end
-
-function queue_sspr(sx, sy, sw, sh, dx, dy, dw,dh)
-  add(tractorqueue, {
-    sx=sx, sy=sy, sw=sw, sh=sh, dx=dx, dy=dy, dw=dw,dh=dh
-  })
-end
-
-function queue_prt(txt, x, y, col)
-  add(printqueue, {
-    t=txt, x=x, y=y,
-    c=col
-  })
-end
-
-function flush_drawqt()
-  for d in all(tractorqueue) do
-    sspr(d.sx, d.sy, d.sw, d.sh, d.dx, d.dy, d.dw, d.dh)
-  end
-  tractorqueue = {}
-end
-
-function flush_drawq()
-  for d in all(drawqueue) do
-    spr(d.n, d.x, d.y, d.w, d.h, d.fx, d.fy)
-  end
-  drawqueue = {}
-end
-
-function flush_printq()
-  for d in all(printqueue) do
-	print(d.t,d.x,d.y,d.c)
-  end
-  printqueue = {}
-end
-
 function doraycasting()
-	for i=0,127 do
-		x=px
-		y=py
+	for sx=0,127 do
+		cam_x=px
+		cam_y=py
 		
-		vx=cos(pa+atan2(1,(i-64)/64))
-		vy=sin(pa+atan2(1,(i-64)/64))
-		fac=cos(atan2(1,(i-64)/64))		
+		ray_x=cos(pa+atan2(1,(sx-64)/64))
+		ray_y=sin(pa+atan2(1,(sx-64)/64))
+
+		fac=cos(atan2(1,(sx-64)/64))		
 		
-		dx=abs(1/vx)
-		dy=abs(1/vy)
+		dx=abs(1/ray_x)
+		dy=abs(1/ray_y)
 
-		ix=vx>0 and 1 or -1
-		iy=vy>0 and 1 or -1
+		ix=ray_x>0 and 1 or -1
+		iy=ray_y>0 and 1 or -1
 
-		if vx>0 then
-			ox=(flr(x)-x+1)/vx
+		if ray_x>0 then
+			ox=(flr(cam_x)-cam_x+1)/ray_x
 		else
-			ox=abs((x-flr(x))/vx)
+			ox=abs((cam_x-flr(cam_x))/ray_x)
 		end
 
-		if vy>0 then
-			oy=(flr(y)-y+1)/vy
+		if ray_y>0 then
+			oy=(flr(cam_y)-cam_y+1)/ray_y
 		else
-			oy=abs((y-flr(y))/vy)
+			oy=abs((cam_y-flr(cam_y))/ray_y)
 		end
 		
 		while true do
 			if ox<oy then
-				x+=ix
+				cam_x+=ix
 				d=ox
 				ox+=dx
-				if (mget(x,y)>0 and mget(x,y)<floortilebound) or x<viewbounds_x1 or x>viewbounds_x2 or y<viewbounds_y1 or y>viewbounds_y2 then
+				if (mget(cam_x,cam_y)>0 and mget(cam_x,cam_y)<floortilebound) or cam_x<viewbounds_x1 or cam_x>viewbounds_x2 or cam_y<viewbounds_y1 or cam_y>viewbounds_y2 then
 					tw=flr(64-h/d/fac)
 					bw=flr(64+h/d/fac)
-					tline(i,tw,i,bw,(py+vy*d)%1*2+(mget(x,y)-1)*2,0,0,2/(bw-tw))
+					tline(
+						sx,tw,sx,bw,
+						(py+ray_y*d)%1*texturesize+(mget(cam_x,cam_y)-1)*2,0,
+						0,texturesize/(bw-tw)
+					)
 					break
 				end
 			else 
-				y+=iy
+				cam_y+=iy
 				d=oy
 				oy+=dy
-				if (mget(x,y)>0 and mget(x,y)<floortilebound) or x<viewbounds_x1 or x>viewbounds_x2 or y<viewbounds_y1 or y>viewbounds_y2 then
+				if (mget(cam_x,cam_y)>0 and mget(cam_x,cam_y)<floortilebound) or cam_x<viewbounds_x1 or cam_x>viewbounds_x2 or cam_y<viewbounds_y1 or cam_y>viewbounds_y2 then
 					tw=flr(64-h/d/fac)
 					bw=flr(64+h/d/fac)
-					tline(i,tw,i,bw,(px+vx*d)%1*2+(mget(x,y)-1)*2,0,0,2/(bw-tw))
+					tline(
+						sx,tw,sx,bw,
+						(px + ray_x * d) % 1 * texturesize + (mget(cam_x,cam_y)-1)*2,0,
+						0,texturesize/(bw-tw)
+					)					
 					break
 				end
 			end
-
-			--printh("mx:"..((px+vx*d)%1*2+(mget(x,y)-1)*2),"log.txt")
 		end
 	end
+end
+
+
+function lookingat()
+	ray_x = cos(pa)*0.005
+	ray_y = sin(pa)*0.005
+
+	nx=px+ray_x
+	ny=py+ray_y
+
+	mx=flr(nx)
+	my=flr(ny)
+
+	--queue_prt("ray_x="..ray_x..", ray_y="..ray_y,5,10,7)
+	--queue_prt("nx="..nx..",ny="..ny..",mx="..mx..",my="..my,5,20,7)
+	--queue_prt("mget(mx,my)"..mget(mx,my),5,30,7)
+
+	--printh("Start While...","log.txt")
+	while notfound do
+		if (mget(mx,my)>=floortilebound) then
+			nx+=ray_x
+			ny+=ray_y
+	--
+			mx=flr(nx)
+			my=flr(ny)
+			--printh("mx="..mx..", my="..my,"log.txt")
+		else
+			notfound=false
+		end
+	end
+	notfound=true
+	--printh("End While...mget("..mx..","..my..")"..mget(mx,my),"log.txt")
+	return mx,my
 end
