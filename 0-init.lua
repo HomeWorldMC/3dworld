@@ -81,6 +81,7 @@ function _update60()
 	if viewbounds_y2>63 then viewbounds_y2=63 end
 
 	controls() 
+	domap()
 
 
 	if (mget(px-1,py)>0 and mget(px-1,py)<floortilebound) or px<=0 then
@@ -133,9 +134,10 @@ function _draw()
 	doraycasting()
 	flush_printq()
 	flush_drawq()
+	flush_drawqt()
 
 	--pset(0,0,11)
-	--print("map("..flr(px)..","..flr(py)..")",5,110,7)
+	print("mget(px,py)"..mget(lx,ly),5,110,7)
 	lx,ly=lookingat()
 	--print("looking at ("..lx..","..ly..") sprite="..mget(lx,ly),5,120,7)
 
@@ -321,7 +323,6 @@ function doraycasting()
 	end
 end
 
-
 function lookingat()
 	ray_x = cos(pa)*0.005
 	ray_y = sin(pa)*0.005
@@ -352,4 +353,40 @@ function lookingat()
 	notfound=true
 	--printh("End While...mget("..mx..","..my..")"..mget(mx,my),"log.txt")
 	return mx,my
+end
+
+function domap()
+	local mapx=flr(px)
+	local mapy=flr(py)
+
+	local spr
+	local offx=3
+	local offy=3
+
+	printh("","log.txt",true)
+	
+	for iy = mapy-5,mapy+5 do
+		for ix = mapx-5,mapx+5 do			
+
+			spr=mget(ix,iy)
+			if (spr>0 and spr <16) then
+				queue_sspr(spr*8,0,3,3,offx,offy,3,3)
+			else
+				queue_sspr(8,8,3,3,offx,offy,3,3)
+			end
+
+			if ix==mapx and iy==mapy then
+				queue_sspr(64,0,2,2,19,19,2,2)
+			end
+
+
+			offx+=3
+			printh("ix="..ix..", iy="..iy..", spr="..spr,"log.txt")
+		end
+		offy+=3
+		offx=3
+	end
+
+
+	--(sx, sy, sw, sh, dx, dy, dw,dh)
 end

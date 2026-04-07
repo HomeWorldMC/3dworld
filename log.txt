@@ -1,754 +1,122 @@
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=3
-mx=7, my=3
-End While...mget(7,3)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=3
-mx=6, my=3
-mx=6, my=4
-mx=7, my=4
-End While...mget(7,4)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=3
-mx=5, my=4
-mx=6, my=4
-mx=6, my=4
-mx=7, my=4
-End While...mget(7,4)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=3
-mx=5, my=4
-mx=5, my=4
-mx=6, my=4
-mx=6, my=4
-mx=7, my=4
-End While...mget(7,4)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=4
-mx=5, my=4
-mx=5, my=4
-mx=6, my=4
-mx=6, my=4
-mx=7, my=4
-End While...mget(7,4)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=3
-mx=4, my=4
-mx=5, my=4
-mx=5, my=4
-mx=6, my=4
-mx=6, my=4
-mx=7, my=4
-End While...mget(7,4)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=4
-mx=4, my=4
-mx=5, my=4
-mx=5, my=4
-mx=6, my=4
-mx=6, my=4
-mx=6, my=4
-mx=7, my=4
-End While...mget(7,4)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=4
-mx=4, my=4
-mx=5, my=4
-mx=5, my=4
-mx=6, my=4
-mx=6, my=4
-mx=6, my=4
-mx=7, my=5
-End While...mget(7,5)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=4
-mx=4, my=4
-mx=5, my=4
-mx=5, my=4
-mx=5, my=4
-mx=6, my=4
-mx=6, my=4
-mx=7, my=5
-End While...mget(7,5)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=3
-mx=4, my=4
-mx=4, my=4
-mx=5, my=4
-mx=5, my=4
-mx=5, my=4
-mx=6, my=4
-mx=6, my=5
-mx=7, my=5
-End While...mget(7,5)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=4
-mx=5, my=4
-mx=6, my=4
-mx=6, my=5
-mx=7, my=5
-End While...mget(7,5)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=4
-mx=5, my=4
-mx=6, my=5
-mx=6, my=5
-mx=7, my=5
-End While...mget(7,5)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=4
-mx=5, my=4
-mx=6, my=5
-mx=6, my=5
-mx=7, my=5
-End While...mget(7,5)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=3
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=4
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=5
-End While...mget(7,5)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=5
-End While...mget(7,5)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=5
-End While...mget(7,5)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=5
-End While...mget(7,5)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=3, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
-Start While...
-mx=2, my=3
-mx=2, my=3
-mx=2, my=4
-mx=3, my=4
-mx=3, my=4
-mx=4, my=4
-mx=4, my=4
-mx=5, my=5
-mx=5, my=5
-mx=6, my=5
-mx=6, my=5
-mx=7, my=6
-End While...mget(7,6)4
+
+ix=23, iy=10, spr=131
+ix=24, iy=10, spr=130
+ix=25, iy=10, spr=131
+ix=26, iy=10, spr=130
+ix=27, iy=10, spr=131
+ix=28, iy=10, spr=4
+ix=29, iy=10, spr=131
+ix=30, iy=10, spr=130
+ix=31, iy=10, spr=131
+ix=32, iy=10, spr=130
+ix=33, iy=10, spr=131
+ix=23, iy=11, spr=130
+ix=24, iy=11, spr=131
+ix=25, iy=11, spr=130
+ix=26, iy=11, spr=131
+ix=27, iy=11, spr=130
+ix=28, iy=11, spr=4
+ix=29, iy=11, spr=130
+ix=30, iy=11, spr=4
+ix=31, iy=11, spr=4
+ix=32, iy=11, spr=4
+ix=33, iy=11, spr=130
+ix=23, iy=12, spr=4
+ix=24, iy=12, spr=6
+ix=25, iy=12, spr=6
+ix=26, iy=12, spr=4
+ix=27, iy=12, spr=131
+ix=28, iy=12, spr=4
+ix=29, iy=12, spr=131
+ix=30, iy=12, spr=4
+ix=31, iy=12, spr=0
+ix=32, iy=12, spr=4
+ix=33, iy=12, spr=131
+ix=23, iy=13, spr=4
+ix=24, iy=13, spr=131
+ix=25, iy=13, spr=130
+ix=26, iy=13, spr=4
+ix=27, iy=13, spr=130
+ix=28, iy=13, spr=4
+ix=29, iy=13, spr=130
+ix=30, iy=13, spr=4
+ix=31, iy=13, spr=0
+ix=32, iy=13, spr=4
+ix=33, iy=13, spr=130
+ix=23, iy=14, spr=4
+ix=24, iy=14, spr=130
+ix=25, iy=14, spr=131
+ix=26, iy=14, spr=4
+ix=27, iy=14, spr=4
+ix=28, iy=14, spr=4
+ix=29, iy=14, spr=131
+ix=30, iy=14, spr=4
+ix=31, iy=14, spr=4
+ix=32, iy=14, spr=4
+ix=33, iy=14, spr=131
+ix=23, iy=15, spr=130
+ix=24, iy=15, spr=131
+ix=25, iy=15, spr=130
+ix=26, iy=15, spr=131
+ix=27, iy=15, spr=130
+ix=28, iy=15, spr=131
+ix=29, iy=15, spr=130
+ix=30, iy=15, spr=131
+ix=31, iy=15, spr=130
+ix=32, iy=15, spr=5
+ix=33, iy=15, spr=130
+ix=23, iy=16, spr=4
+ix=24, iy=16, spr=4
+ix=25, iy=16, spr=4
+ix=26, iy=16, spr=4
+ix=27, iy=16, spr=4
+ix=28, iy=16, spr=130
+ix=29, iy=16, spr=131
+ix=30, iy=16, spr=130
+ix=31, iy=16, spr=4
+ix=32, iy=16, spr=4
+ix=33, iy=16, spr=4
+ix=23, iy=17, spr=130
+ix=24, iy=17, spr=4
+ix=25, iy=17, spr=0
+ix=26, iy=17, spr=0
+ix=27, iy=17, spr=4
+ix=28, iy=17, spr=131
+ix=29, iy=17, spr=130
+ix=30, iy=17, spr=131
+ix=31, iy=17, spr=4
+ix=32, iy=17, spr=0
+ix=33, iy=17, spr=0
+ix=23, iy=18, spr=131
+ix=24, iy=18, spr=4
+ix=25, iy=18, spr=0
+ix=26, iy=18, spr=0
+ix=27, iy=18, spr=4
+ix=28, iy=18, spr=4
+ix=29, iy=18, spr=5
+ix=30, iy=18, spr=4
+ix=31, iy=18, spr=4
+ix=32, iy=18, spr=0
+ix=33, iy=18, spr=0
+ix=23, iy=19, spr=130
+ix=24, iy=19, spr=4
+ix=25, iy=19, spr=0
+ix=26, iy=19, spr=0
+ix=27, iy=19, spr=0
+ix=28, iy=19, spr=4
+ix=29, iy=19, spr=130
+ix=30, iy=19, spr=4
+ix=31, iy=19, spr=0
+ix=32, iy=19, spr=0
+ix=33, iy=19, spr=0
+ix=23, iy=20, spr=4
+ix=24, iy=20, spr=4
+ix=25, iy=20, spr=0
+ix=26, iy=20, spr=0
+ix=27, iy=20, spr=0
+ix=28, iy=20, spr=4
+ix=29, iy=20, spr=131
+ix=30, iy=20, spr=4
+ix=31, iy=20, spr=0
+ix=32, iy=20, spr=0
+ix=33, iy=20, spr=0
