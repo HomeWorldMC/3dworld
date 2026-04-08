@@ -7,7 +7,7 @@ function _init()
 	lpa=1
 		
 	px=1
-	py=3
+	py=5
 
 	x=0
 	y=0
@@ -20,7 +20,7 @@ function _init()
 	ix=0
 	iy=0
 	h=32
-	cs={13,4,12,3,5}
+	--cs={13,4,12,3,5}
 
 	mx=0
 	my=0
@@ -39,9 +39,9 @@ function _init()
 
 	wasvertint=false
 
-	floortilebound=128
+	floortilebound=192
 
-	texturesize=2 --*8
+	texturesize=4 --*8
 
 	facing="North"
 
@@ -60,7 +60,8 @@ function _init()
 
 	-- enables mouse and keyboard
 	poke(0x5F2D, 5)
-	--palt(0, false)
+	palt(0, false)
+	palt(11, true)
 end
 
 function reset_pal()
@@ -83,17 +84,29 @@ function _update60()
 	controls() 
 	domap()
 
+	--fget(mget(px-1,py),1)
+	local msp=mget(px-1,py)
+	local fsp=fget(msp,1)
 
-	if (mget(px-1,py)>0 and mget(px-1,py)<floortilebound) or px<=0 then
+	if fsp or px<=0 then
 		px=max(px,flr(px)+0.2)
 	end
-	if (mget(px+1,py)>0 and mget(px+1,py)<floortilebound) or px>=127 then
+
+	msp=mget(px+1,py)
+	fsp=fget(msp,1)
+	if fsp or px>=127 then
 		px=min(px,ceil(px)-0.2)
 	end
-	if (mget(px,py-1)>0 and mget(px,py-1)<floortilebound) or py<=0 then
+
+	msp=mget(px,py-1)
+	fsp=fget(msp,1)
+	if fsp or py<=0 then
 		py=max(py,flr(py)+0.2)
 	end
-	if (mget(px,py+1)>0 and mget(px,py+1)<floortilebound) or py>=63 then
+
+	msp=mget(px,py+1)
+	fsp=fget(msp,1)
+	if fsp or py>=63 then
 		py=min(py,ceil(py)-0.2)
 	end
 
@@ -139,7 +152,7 @@ function _draw()
 	--pset(0,0,11)
 	--print("mget(px,py)"..mget(lx,ly),5,110,7)
 	lx,ly=lookingat()
-	--print("looking at ("..lx..","..ly..") sprite="..mget(lx,ly),5,120,7)
+	print("looking at ("..lx..","..ly..") sprite="..mget(lx,ly),5,120,7)
 
 	spr(16,64,64)
 end
@@ -229,8 +242,8 @@ function controls()
 
 	if stat(34)==1 then
 		--queue_spr(16,64,64,1,1,false,false)
-		if mget(lx,ly)==5 then
-			mset(lx, ly, 130)
+		if mget(lx,ly)==5 or mget(lx,ly)==9 then
+			mset(lx, ly, 32)
 		end
 	end
 
@@ -262,6 +275,8 @@ function controls()
 end
 
 function doraycasting()
+	local iswall
+
 	for sx=0,127 do
 		cam_x=px
 		cam_y=py
@@ -294,12 +309,15 @@ function doraycasting()
 				cam_x+=ix
 				d=ox
 				ox+=dx
-				if (mget(cam_x,cam_y)>0 and mget(cam_x,cam_y)<floortilebound) or cam_x<viewbounds_x1 or cam_x>viewbounds_x2 or cam_y<viewbounds_y1 or cam_y>viewbounds_y2 then
+				iswall=fget(mget(cam_x,cam_y),1)
+
+				--if (mget(cam_x,cam_y)>0 and mget(cam_x,cam_y)<floortilebound) or cam_x<viewbounds_x1 or cam_x>viewbounds_x2 or cam_y<viewbounds_y1 or cam_y>viewbounds_y2 then
+				if iswall or cam_x<viewbounds_x1 or cam_x>viewbounds_x2 or cam_y<viewbounds_y1 or cam_y>viewbounds_y2 then
 					tw=flr(64-h/d/fac)
 					bw=flr(64+h/d/fac)
 					tline(
 						sx,tw,sx,bw,
-						(py+ray_y*d)%1*texturesize+(mget(cam_x,cam_y)-1)*2,0,
+						(py+ray_y*d)%1*texturesize+(mget(cam_x,cam_y)-1)*4,0,
 						0,texturesize/(bw-tw)
 					)
 					break
@@ -307,13 +325,16 @@ function doraycasting()
 			else 
 				cam_y+=iy
 				d=oy
-				oy+=dy
-				if (mget(cam_x,cam_y)>0 and mget(cam_x,cam_y)<floortilebound) or cam_x<viewbounds_x1 or cam_x>viewbounds_x2 or cam_y<viewbounds_y1 or cam_y>viewbounds_y2 then
+				oy+=dy				
+				iswall=fget(mget(cam_x,cam_y),1)
+				
+				--if (mget(cam_x,cam_y)>0 and mget(cam_x,cam_y)<floortilebound) or cam_x<viewbounds_x1 or cam_x>viewbounds_x2 or cam_y<viewbounds_y1 or cam_y>viewbounds_y2 then
+				if iswall or cam_x<viewbounds_x1 or cam_x>viewbounds_x2 or cam_y<viewbounds_y1 or cam_y>viewbounds_y2 then
 					tw=flr(64-h/d/fac)
 					bw=flr(64+h/d/fac)
 					tline(
 						sx,tw,sx,bw,
-						(px + ray_x * d) % 1 * texturesize + (mget(cam_x,cam_y)-1)*2,0,
+						(px + ray_x * d) % 1 * texturesize + (mget(cam_x,cam_y)-1)*4,0,
 						0,texturesize/(bw-tw)
 					)					
 					break
@@ -333,58 +354,62 @@ function lookingat()
 	mx=flr(nx)
 	my=flr(ny)
 
-	--queue_prt("ray_x="..ray_x..", ray_y="..ray_y,5,10,7)
-	--queue_prt("nx="..nx..",ny="..ny..",mx="..mx..",my="..my,5,20,7)
-	--queue_prt("mget(mx,my)"..mget(mx,my),5,30,7)
-
-	--printh("Start While...","log.txt")
 	while notfound do
-		if (mget(mx,my)>=floortilebound) then
+		if not fget(mget(mx,my),1) then
 			nx+=ray_x
 			ny+=ray_y
-	--
+
 			mx=flr(nx)
 			my=flr(ny)
-			--printh("mx="..mx..", my="..my,"log.txt")
 		else
 			notfound=false
 		end
 	end
 	notfound=true
-	--printh("End While...mget("..mx..","..my..")"..mget(mx,my),"log.txt")
 	return mx,my
 end
 
 function domap()
+	local mappixelsize=2
 	local mapx=flr(px)
 	local mapy=flr(py)
+	local sprx=0
+	local spry=0
 
 	local spr
-	local offx=3
-	local offy=3
+	local sprf
+	local offx=mappixelsize
+	local offy=mappixelsize
 
 	--printh("","log.txt",true)
 	
-	for iy = mapy-5,mapy+5 do
-		for ix = mapx-5,mapx+5 do			
-
+	for iy = mapy-7,mapy+7 do
+		for ix = mapx-7,mapx+7 do			
+			
 			spr=mget(ix,iy)
-			if (spr>0 and spr <16) then
-				queue_sspr(spr*8,0,3,3,offx,offy,3,3)
+			isfloor=fget(spr,0)
+			iswall=fget(spr,1)
+
+			if iswall then
+				queue_sspr(24,8,mappixelsize,mappixelsize,offx,offy,mappixelsize,mappixelsize)
+			elseif isfloor then
+				queue_sspr(16,8,mappixelsize,mappixelsize,offx,offy,mappixelsize,mappixelsize)
 			else
-				queue_sspr(8,8,3,3,offx,offy,3,3)
+				queue_sspr(0,0,mappixelsize,mappixelsize,offx,offy,mappixelsize,mappixelsize)
 			end
+
+			
 
 			if ix==mapx and iy==mapy then
-				queue_sspr(64,0,2,2,19,19,2,2)
+				queue_sspr(64,0,1,1,17,17,1,1)
 			end
 
 
-			offx+=3
-			--printh("ix="..ix..", iy="..iy..", spr="..spr,"log.txt")
+			offx+=mappixelsize
+			--printh("spr="..spr..", sprx="..sprx..", spry="..spry,"log.txt")
 		end
-		offy+=3
-		offx=3
+		offy+=mappixelsize
+		offx=mappixelsize
 	end
 
 
