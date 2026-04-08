@@ -56,7 +56,8 @@ function _init()
 
 	notfound=true
 
-	lx,ly=0
+	lx=0
+	ly=0
 
 	-- enables mouse and keyboard
 	poke(0x5F2D, 5)
@@ -66,7 +67,26 @@ function _init()
 	--pal({[0]=0,128,133,5,134,6,7,8,9,142,143,14,12,11,3,131},1)
 	--pal({[0]=0,5,6,7,8,136,2,1,129,131,138,139,3,4,132,143},1)
 
-	pal({[0]=0,128,132,134,4,9,137,143,7,15,142,135,5,133,130,6},1)
+	--pal({[0]=0,128,132,134,4,9,137,143,7,15,142,135,5,133,130,6},1)
+
+	contrast = {
+		[0]=7,  -- black -> white
+		[1]=7,  -- dark blue -> white
+		[2]=7,  -- dark purple -> white
+		[3]=0,  -- dark green -> black
+		[4]=7,  -- brown -> white
+		[5]=7,  -- dark gray -> white
+		[6]=0,  -- light gray -> black
+		[7]=0,  -- white -> black
+		[8]=7,  -- red -> white
+		[9]=0,  -- orange -> black
+		[10]=0, -- yellow -> black
+		[11]=0, -- green -> black
+		[12]=0, -- blue -> black
+		[13]=0, -- lavender -> black
+		[14]=0, -- pink -> black
+		[15]=0  -- peach -> black
+	}
 end
 
 function reset_pal()
@@ -88,32 +108,8 @@ function _update60()
 
 	controls() 
 	domap()
-
-	--fget(mget(px-1,py),1)
-	local msp=mget(px-1,py)
-	local fsp=fget(msp,1)
-
-	if fsp or px<=0 then
-		px=max(px,flr(px)+0.2)
-	end
-
-	msp=mget(px+1,py)
-	fsp=fget(msp,1)
-	if fsp or px>=127 then
-		px=min(px,ceil(px)-0.2)
-	end
-
-	msp=mget(px,py-1)
-	fsp=fget(msp,1)
-	if fsp or py<=0 then
-		py=max(py,flr(py)+0.2)
-	end
-
-	msp=mget(px,py+1)
-	fsp=fget(msp,1)
-	if fsp or py>=63 then
-		py=min(py,ceil(py)-0.2)
-	end
+	lx,ly=lookingat()
+	docollisions()
 
 	mx = stat(32)
 	my = stat(33)
@@ -139,12 +135,9 @@ end
 	
 function _draw()
 	cls(0)
-	--fillp(0b0101101001011010)
-	--fillp(🐱)
 
-
-	rectfill(0,0,127,63,1)
-	--rectfill(0,64,127,127,5)
+	--fillp(0b1010010110100101)
+	rectfill(0,0,127,63,5)
 	drawfloor(px,py,pa) 
 	--drawceiling(px,py,pa) 
 	lpa=pa
@@ -155,11 +148,48 @@ function _draw()
 	flush_drawqt()
 
 	--pset(0,0,11)
-	print("(px="..flr(px)..", py="..flr(py)..")",5,110,7)
-	lx,ly=lookingat()
-	print("looking at ("..lx..","..ly..") sprite="..mget(lx,ly),5,120,7)
+	--print("(px="..flr(px)..", py="..flr(py)..")",5,110,7)
+	
+	--print("looking at ("..lx..","..ly..") sprite="..mget(lx,ly),5,120,7)
 
-	spr(16,64,64)
+	--spr(16,64,64) -- cross hair 
+	crosshair()
+end
+
+function docollisions()
+	local msp=mget(px-1,py)
+	local fsp=fget(msp,1)
+
+	if fsp or px<=0 then
+		px=max(px,flr(px)+0.2)
+	end
+
+	msp=mget(px+1,py)
+	fsp=fget(msp,1)
+	if fsp or px>=127 then
+		px=min(px,ceil(px)-0.2)
+	end
+
+	msp=mget(px,py-1)
+	fsp=fget(msp,1)
+	if fsp or py<=0 then
+		py=max(py,flr(py)+0.2)
+	end
+
+	msp=mget(px,py+1)
+	fsp=fget(msp,1)
+	if fsp or py>=63 then
+		py=min(py,ceil(py)-0.2)
+	end
+end
+
+function crosshair()
+	pset(63,63,contrast[pget(63,63)])
+
+	pset(62,63,contrast[pget(62,63)])
+	pset(64,63,contrast[pget(64,63)])
+	pset(63,62,contrast[pget(63,62)])
+	pset(63,64,contrast[pget(63,64)])
 end
 
 function drawfloor(cam_x, cam_y, cam_a)
@@ -225,36 +255,11 @@ function controls()
 
 	if stat(34)==1 then
 		--queue_spr(16,64,64,1,1,false,false)
-		if mget(lx,ly)==5 or mget(lx,ly)==9 then
-			mset(lx, ly, 17)
+		if mget(lx,ly)==3 or mget(lx,ly)==7 then
+			mset(lx, ly, 52)
+			sfx(0)
 		end
 	end
-
-	--if btn(⬆️) or btn(2,1) then
-	--	px+=cos(pa)*0.1
-	--	py+=sin(pa)*0.1
---
-	--	--if px>64 then px=64 end
-	--	--if py>64 then py=64 end
-	--end
-	--
-	--if btn(⬇️) or btn(3,1) then
-	--	px-=cos(pa)*0.1
-	--	py-=sin(pa)*0.1
---
-	--	--if px<0 then px=0 end
-	--	--if py<0 then py=0 end
-	--end
-	
-	--if btn(❎) or btn(4,1) then
-	--	px-=cos(pa -0.25)*0.1
-	--	py-=sin(pa -0.25)*0.1
-	--end
---
-	--if (btn(🅾️) or btn(5,1)) then
-	--	px+=cos(pa -0.25)*0.1
-	--	py+=sin(pa -0.25)*0.1
-	--end
 end
 
 function doraycasting()
@@ -328,8 +333,8 @@ function doraycasting()
 end
 
 function lookingat()
-	ray_x = cos(pa)*0.005
-	ray_y = sin(pa)*0.005
+	ray_x = cos(pa)*0.5
+	ray_y = sin(pa)*0.5
 
 	nx=px+ray_x
 	ny=py+ray_y
