@@ -7,7 +7,7 @@ function _init()
 	lpa=1
 		
 	px=1
-	py=5
+	py=16
 
 	x=0
 	y=0
@@ -62,6 +62,11 @@ function _init()
 	poke(0x5F2D, 5)
 	palt(0, false)
 	palt(11, true)
+
+	--pal({[0]=0,128,133,5,134,6,7,8,9,142,143,14,12,11,3,131},1)
+	--pal({[0]=0,5,6,7,8,136,2,1,129,131,138,139,3,4,132,143},1)
+
+	pal({[0]=0,128,132,134,4,9,137,143,7,15,142,135,5,133,130,6},1)
 end
 
 function reset_pal()
@@ -138,7 +143,7 @@ function _draw()
 	--fillp(🐱)
 
 
-	rectfill(0,0,127,63,5)
+	rectfill(0,0,127,63,1)
 	--rectfill(0,64,127,127,5)
 	drawfloor(px,py,pa) 
 	--drawceiling(px,py,pa) 
@@ -150,7 +155,7 @@ function _draw()
 	flush_drawqt()
 
 	--pset(0,0,11)
-	--print("mget(px,py)"..mget(lx,ly),5,110,7)
+	print("(px="..flr(px)..", py="..flr(py)..")",5,110,7)
 	lx,ly=lookingat()
 	print("looking at ("..lx..","..ly..") sprite="..mget(lx,ly),5,120,7)
 
@@ -172,28 +177,6 @@ function drawfloor(cam_x, cam_y, cam_a)
       x1, y1,
       (x2-x1)/128, (y2-y1)/128
     )
-  end
-end
-
-function drawceiling(cam_x, cam_y, cam_a)
-  -- 128x128 screen
-  for y=0, 63 do
-    -- calculate distance/perspective for this row
-    local dist = 32/y
-    
-    -- calculate floor space coordinates for left and right edges
-    -- of this horizontal scanline based on camera angle (a)
-    local x1 = cam_x + (cos(cam_a+0.25)*dist - sin(cam_a+0.25)*dist)
-    local y1 = cam_y + (sin(cam_a+0.25)*dist + cos(cam_a+0.25)*dist)
-	
-    local x2 = cam_x + (cos(cam_a-0.25)*dist + sin(cam_a-0.25)*dist)
-    local y2 = cam_y + (sin(cam_a-0.25)*dist - cos(cam_a-0.25)*dist)
-    
-    -- draw line from left (0,y) to right (127,y)
-    -- sampling from map space
-    tline(0,63-y, 127,63-y, 
-          x1,y1,  -- start mapping coordinate (u,v)
-          (x2-x1)/128, (y2-y1)/128) -- delta (stepping)
   end
 end
 
@@ -243,7 +226,7 @@ function controls()
 	if stat(34)==1 then
 		--queue_spr(16,64,64,1,1,false,false)
 		if mget(lx,ly)==5 or mget(lx,ly)==9 then
-			mset(lx, ly, 32)
+			mset(lx, ly, 17)
 		end
 	end
 
@@ -354,19 +337,20 @@ function lookingat()
 	mx=flr(nx)
 	my=flr(ny)
 
-	while notfound do
-		if not fget(mget(mx,my),1) then
-			nx+=ray_x
-			ny+=ray_y
+	local d=0
 
-			mx=flr(nx)
-			my=flr(ny)
-		else
-			notfound=false
-		end
+	while d<2 do
+		d=sqrt((nx-px)*(nx-px) + (ny-py)*(ny-py))
+		nx+=ray_x
+		ny+=ray_y
+
+		mx=flr(nx)
+		my=flr(ny)
+
+		if fget(mget(mx,my),1) then return mx,my end
 	end
-	notfound=true
-	return mx,my
+
+	return -1,-1
 end
 
 function domap()
