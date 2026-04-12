@@ -6,7 +6,7 @@ function _init()
 	pa=0
 	lpa=1
 		
-	px=1
+	px=5
 	py=16
 
 	x=0
@@ -62,12 +62,15 @@ function _init()
 	-- enables mouse and keyboard
 	poke(0x5F2D, 5)
 	palt(0, false)
-	palt(11, true)
+	palt(13, true)
 
 	--pal({[0]=0,128,133,5,134,6,7,8,9,142,143,14,12,11,3,131},1)
 	--pal({[0]=0,5,6,7,8,136,2,1,129,131,138,139,3,4,132,143},1)
 
 	--pal({[0]=0,128,132,134,4,9,137,143,7,15,142,135,5,133,130,6},1)
+
+	--pal({[0]=128,129,2,3,132,5,6,7,8,9,10,11,12,13,14,15},1)
+	pal({[0]=0,128,129,1,2,5,13,6,7,4,137,8,12,11,3,135},1)
 
 	contrast = {
 		[0]=7,  -- black -> white
@@ -115,7 +118,11 @@ function _update60()
 	my = stat(33)
 	dmx = stat(38)
 	dmy = stat(39)
-	
+
+
+	sprite1_x = 2
+	sprite1_y = 17	
+	sprite1_z = 0
 	
 	pa -= dmx * sensitivity
 
@@ -147,8 +154,22 @@ function _draw()
 	flush_drawq()
 	flush_drawqt()
 
+	local sprite_sx=0
+	local sprite_sy=0
+	local sprite_cy =0
+
+	sprite_sx,sprite_sy,sprite_cy = converttoscreenspace(sprite1_x,sprite1_y,sprite1_z)
+
 	--pset(0,0,11)
-	--print("(px="..flr(px)..", py="..flr(py)..")",5,110,7)
+	print("(px="..flr(px)..", py="..flr(py)..", pa="..pa..")",5,90,7)
+	
+	if sprite_cy~=nil then
+		local size = 40/sprite_cy
+		print("dist: "..tostr(sqrt((px-sprite1_x)*(px-sprite1_x) + (py-sprite1_y)*(py-sprite1_y)))..", size="..size,5,120,7)
+		--spr(23,sprite_sx,sprite_sy,2,2)
+		
+		sspr(56,8,16,16, sprite_sx - size/2, sprite_sy - size/2, size, size)
+	end
 	
 	--print("looking at ("..lx..","..ly..") sprite="..mget(lx,ly),5,120,7)
 
@@ -403,4 +424,25 @@ function domap()
 
 
 	--(sx, sy, sw, sh, dx, dy, dw,dh)
+end
+
+function converttoscreenspace(x,y,z)
+	local dx = x-px
+	local dy = y-py
+	local dz = z
+
+	local ang = pa+0.25
+
+	local cx =  cos(ang) * dx + sin(ang) * dy
+	local cy = -sin(ang) * dx + cos(ang) * dy
+	--print("cx="..cx..",cy="..cy,5,100,7)
+
+	if cy <= 0 then return nil end
+
+    local sx = 128 - (64 + (cx / cy) * 64)   -- assuming 128px width
+    local sy = 64 - (dz / cy) * 64   -- assuming 128px height
+
+	--print("sx="..sx..",sy="..sy,5,110,7)
+
+    return sx, sy, cy
 end
