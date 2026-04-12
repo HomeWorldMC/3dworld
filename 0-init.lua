@@ -59,6 +59,14 @@ function _init()
 	lx=0
 	ly=0
 
+	spritemove=0
+	spritemovedir=1
+
+	zbuffer={}
+	for i=1,128 do
+		add(zbuffer,0)
+	end
+
 	-- enables mouse and keyboard
 	poke(0x5F2D, 5)
 	palt(0, false)
@@ -156,25 +164,49 @@ function _draw()
 
 	local sprite_sx=0
 	local sprite_sy=0
-	local sprite_cy =0
+	local sprite_cy=0
 
 	sprite_sx,sprite_sy,sprite_cy = converttoscreenspace(sprite1_x,sprite1_y,sprite1_z)
 
 	--pset(0,0,11)
-	print("(px="..flr(px)..", py="..flr(py)..", pa="..pa..")",5,90,7)
+	--print("(px="..flr(px)..", py="..flr(py)..", pa="..pa..")",5,90,7)
 	
 	if sprite_cy~=nil then
 		local size = 40/sprite_cy
-		print("dist: "..tostr(sqrt((px-sprite1_x)*(px-sprite1_x) + (py-sprite1_y)*(py-sprite1_y)))..", size="..size,5,120,7)
-		--spr(23,sprite_sx,sprite_sy,2,2)
-		
-		sspr(56,8,16,16, sprite_sx - size/2, sprite_sy - size/2, size, size)
-	end
-	
-	--print("looking at ("..lx..","..ly..") sprite="..mget(lx,ly),5,120,7)
+		local dist = sqrt((px-sprite1_x)*(px-sprite1_x) + (py-sprite1_y)*(py-sprite1_y))
 
-	--spr(16,64,64) -- cross hair 
+		--print("dist: "..dist..", size="..size,5,120,7)
+
+		local left = sprite_sx - size/2
+		local right = sprite_sx + size/2
+
+		--printh("doing zbuffer","log.txt",true)
+		for x = flr(left)+1, flr(right) do
+			local t = (x - left) / size
+			local tex_x = flr(t * 8)
+			local walldist=zbuffer[x%128+1]
+
+			printh("zbuffer at "..x.."="..". dist="..dist,"log.txt")
+
+			if dist < walldist then
+				sspr(
+					56 + tex_x, 8,
+					1, 8,
+					x, sprite_sy - size*spritemove,
+					1, size
+				)
+			end
+		end
+		--printh("------------------------","log.txt")
+	end
+
+	spritemove+=0.1*spritemovedir
+	if spritemove>1 or spritemove < 0 then
+		spritemovedir=spritemovedir*-1
+	end
+
 	crosshair()
+	rect(1,1,32,32,7)
 end
 
 function docollisions()
@@ -285,7 +317,7 @@ end
 
 function doraycasting()
 	local iswall
-
+	--printh("doing ray casting", "log.txt",true)
 	for sx=0,127 do
 		cam_x=px
 		cam_y=py
@@ -329,6 +361,8 @@ function doraycasting()
 						(py+ray_y*d)%1*texturesize+(mget(cam_x,cam_y)-1)*4,0,
 						0,texturesize/(bw-tw)
 					)
+					zbuffer[sx+1]=d
+					--printh("zbuffer - x="..(sx+1)..", depth="..d, "log.txt")
 					break
 				end
 			else 
@@ -345,12 +379,15 @@ function doraycasting()
 						sx,tw,sx,bw,
 						(px + ray_x * d) % 1 * texturesize + (mget(cam_x,cam_y)-1)*4,0,
 						0,texturesize/(bw-tw)
-					)					
+					)	
+					zbuffer[sx+1]=d		
+					--printh("zbuffer - x="..(sx+1)..", depth="..d, "log.txt")
 					break
 				end
 			end
 		end
 	end
+	--printh("----------------------------", "log.txt")
 end
 
 function lookingat()
@@ -422,6 +459,8 @@ function domap()
 		offx=mappixelsize
 	end
 
+	
+
 
 	--(sx, sy, sw, sh, dx, dy, dw,dh)
 end
@@ -435,14 +474,11 @@ function converttoscreenspace(x,y,z)
 
 	local cx =  cos(ang) * dx + sin(ang) * dy
 	local cy = -sin(ang) * dx + cos(ang) * dy
-	--print("cx="..cx..",cy="..cy,5,100,7)
 
 	if cy <= 0 then return nil end
 
     local sx = 128 - (64 + (cx / cy) * 64)   -- assuming 128px width
     local sy = 64 - (dz / cy) * 64   -- assuming 128px height
-
-	--print("sx="..sx..",sy="..sy,5,110,7)
 
     return sx, sy, cy
 end
