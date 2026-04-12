@@ -3,11 +3,11 @@ function _init()
    custom_palette = {[0]=0,128,133,5,6,7,1,140,12,3,139,11,130,132,4,15}
    reset_pal()
 
-	pa=0
+	pa=0.5
 	lpa=1
 		
-	px=5
-	py=16
+	px=6.5
+	py=17
 
 	x=0
 	y=0
@@ -59,8 +59,7 @@ function _init()
 	lx=0
 	ly=0
 
-	spritemove=0
-	spritemovedir=1
+	screensprites={{n=23,x=2,y=17,c=0,cd=1,dist=0},{n=24,x=5,y=17,c=0,cd=1,dist=0},{n=39,x=9.5,y=23.5,c=0,cd=1,dist=0},{n=24,x=3.5,y=23.5,c=0,cd=1,dist=0}}
 
 	zbuffer={}
 	for i=1,128 do
@@ -162,51 +161,103 @@ function _draw()
 	flush_drawq()
 	flush_drawqt()
 
-	local sprite_sx=0
-	local sprite_sy=0
-	local sprite_cy=0
-
-	sprite_sx,sprite_sy,sprite_cy = converttoscreenspace(sprite1_x,sprite1_y,sprite1_z)
-
-	--pset(0,0,11)
-	--print("(px="..flr(px)..", py="..flr(py)..", pa="..pa..")",5,90,7)
-	
-	if sprite_cy~=nil then
-		local size = 40/sprite_cy
-		local dist = sqrt((px-sprite1_x)*(px-sprite1_x) + (py-sprite1_y)*(py-sprite1_y))
-
-		--print("dist: "..dist..", size="..size,5,120,7)
-
-		local left = sprite_sx - size/2
-		local right = sprite_sx + size/2
-
-		--printh("doing zbuffer","log.txt",true)
-		for x = flr(left)+1, flr(right) do
-			local t = (x - left) / size
-			local tex_x = flr(t * 8)
-			local walldist=zbuffer[x%128+1]
-
-			printh("zbuffer at "..x.."="..". dist="..dist,"log.txt")
-
-			if dist < walldist then
-				sspr(
-					56 + tex_x, 8,
-					1, 8,
-					x, sprite_sy - size*spritemove,
-					1, size
-				)
-			end
-		end
-		--printh("------------------------","log.txt")
-	end
-
-	spritemove+=0.1*spritemovedir
-	if spritemove>1 or spritemove < 0 then
-		spritemovedir=spritemovedir*-1
-	end
+	doscreensprites()
 
 	crosshair()
 	rect(1,1,32,32,7)
+end
+
+function qsort(t, comp)
+	if #t <= 1 then return t end
+	
+	local pivot = t[1]
+	local left, right = {}, {}
+	
+	for i = 2, #t do
+		if comp(t[i], pivot) then
+			add(left, t[i])
+		else
+			add(right, t[i])
+		end
+	end
+	
+	qsort(left, comp)
+	qsort(right, comp)
+	
+	local i = 1
+	for _, v in ipairs(left) do
+		t[i] = v
+		i += 1
+	end
+	t[i] = pivot
+	i += 1
+	for _, v in ipairs(right) do
+		t[i] = v
+		i += 1
+	end
+end
+
+function doscreensprites()
+	-- {n=23,x=2,y=17,c=0,cd=1}
+	for s in all(screensprites) do
+		local dx = s.x - px
+		local dy = s.y - py
+
+		s.dist = dx*dx + dy*dy  -- squared distance (faster, no sqrt)
+	end
+
+	qsort(screensprites, function(a, b)
+		return a.dist > b.dist
+	end)
+
+	printh("do screen sprites","log.txt",true)
+
+	for s in all(screensprites) do
+		local sprite_num=s.n
+		local sprite_sx=0
+		local sprite_sy=0
+		local sprite_cy=0
+
+		local snx = (s.n % 16) * 8
+		local sny = flr(s.n / 16) * 8
+
+		local dist = sqrt((px-s.x)*(px-s.x) + (py-s.y)*(py-s.y))
+
+		sprite_sx,sprite_sy,sprite_cy = converttoscreenspace(s.x,s.y,0)
+
+		printh("sprite:"..s.n.."dist="..dist,"log.txt")
+		
+		if dist>0.32 then
+			if sprite_cy~=nil then
+				local size = 40/sprite_cy
+
+				local left = sprite_sx - size/2
+				local right = sprite_sx + size/2
+
+				for x = flr(left)+1, flr(right) do
+					local t = (x - left) / size
+					local tex_x = flr(t * 8)
+					local walldist=zbuffer[x%128+1]
+
+					if dist < walldist then
+						sspr(
+							snx + tex_x, sny,
+							1, 8,
+							x, sprite_sy - size*s.c,
+							1, size
+						)
+					end
+				end
+				s.c+=0.1*s.cd
+				if s.c>1 or s.c < 0 then
+					s.cd=s.cd*-1
+				end
+			end
+		else
+			del(screensprites,s)
+			sfx(1)
+		end
+	end
 end
 
 function docollisions()
@@ -356,6 +407,7 @@ function doraycasting()
 				if iswall or cam_x<viewbounds_x1 or cam_x>viewbounds_x2 or cam_y<viewbounds_y1 or cam_y>viewbounds_y2 then
 					tw=flr(64-h/d/fac)
 					bw=flr(64+h/d/fac)
+					--pal(5, 6, 0) 
 					tline(
 						sx,tw,sx,bw,
 						(py+ray_y*d)%1*texturesize+(mget(cam_x,cam_y)-1)*4,0,
@@ -375,6 +427,7 @@ function doraycasting()
 				if iswall or cam_x<viewbounds_x1 or cam_x>viewbounds_x2 or cam_y<viewbounds_y1 or cam_y>viewbounds_y2 then
 					tw=flr(64-h/d/fac)
 					bw=flr(64+h/d/fac)
+					
 					tline(
 						sx,tw,sx,bw,
 						(px + ray_x * d) % 1 * texturesize + (mget(cam_x,cam_y)-1)*4,0,
@@ -385,6 +438,7 @@ function doraycasting()
 					break
 				end
 			end
+			
 		end
 	end
 	--printh("----------------------------", "log.txt")
